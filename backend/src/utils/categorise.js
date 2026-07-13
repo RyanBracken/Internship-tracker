@@ -7,7 +7,7 @@ const CATEGORIES = {
   'Economics': ['economics','economist','economic','macro','micro','econometrics','research analyst','market research','economic analysis'],
   'Business & Strategy': ['business','strategy','operations','management','project management','business analyst','corporate','commercial','sales','marketing','business development','supply chain','logistics','procurement'],
   'Consulting': ['consulting','consultant','advisory','management consulting','strategy consulting','transformation','change management'],
-];
+};
 
 const ALL_FINANCE_KEYWORDS = [
   'finance','financial','accounting','accountant','tax','audit','banking','bank',
