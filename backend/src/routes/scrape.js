@@ -5,13 +5,10 @@ const { getDb } = require('../db');
 let scrapeRunning = false;
 let lastRunResult = null;
 
-// POST /api/scrape/trigger - manually trigger a scrape
 router.post('/trigger', async (req, res) => {
   if (scrapeRunning) return res.status(409).json({ error: 'Scrape already running' });
-
   scrapeRunning = true;
   res.json({ message: 'Scrape started', running: true });
-
   try {
     const { runAll } = require('../scraper-runner');
     await runAll();
@@ -23,13 +20,14 @@ router.post('/trigger', async (req, res) => {
   }
 });
 
-// GET /api/scrape/status
 router.get('/status', (req, res) => {
-  const db = getDb();
-  const recentLogs = db.prepare(`
-    SELECT * FROM scrape_log ORDER BY started_at DESC LIMIT 20
-  `).all();
-  res.json({ running: scrapeRunning, last_result: lastRunResult, logs: recentLogs });
+  try {
+    const db = getDb();
+    const recentLogs = db.prepare(`SELECT * FROM scrape_log ORDER BY started_at DESC LIMIT 20`).all();
+    res.json({ running: scrapeRunning, last_result: lastRunResult, logs: recentLogs });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 module.exports = router;

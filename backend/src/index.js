@@ -4,10 +4,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cron = require('node-cron');
-const path = require('path');
-
-// Run migrations on startup
-require('./migrate');
+const { initDb } = require('./db');
+const { migrate } = require('./migrate');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,7 +25,6 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
-// Routes
 app.use('/api/internships', require('./routes/internships'));
 app.use('/api/applications', require('./routes/applications'));
 app.use('/api/scrape', require('./routes/scrape'));
@@ -36,18 +33,26 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() });
 });
 
-// Schedule scraper every 24 hours at 3:00 AM
-cron.schedule('0 3 * * *', async () => {
-  console.log('[CRON] Starting scheduled scrape at', new Date().toISOString());
-  try {
-    const { runAll } = require('./scraper-runner');
-    await runAll();
-  } catch (err) {
-    console.error('[CRON] Scrape failed:', err.message);
-  }
-}, { timezone: 'Europe/Dublin' });
+async function start() {
+  await migrate();
 
-app.listen(PORT, () => {
-  console.log(`Backend API running on http://localhost:${PORT}`);
-  console.log(`Scraper scheduled to run daily at 03:00 Europe/Dublin`);
+  cron.schedule('0 3 * * *', async () => {
+    console.log('[CRON] Starting scheduled scrape at', new Date().toISOString());
+    try {
+      const { runAll } = require('./scraper-runner');
+      await runAll();
+    } catch (err) {
+      console.error('[CRON] Scrape failed:', err.message);
+    }
+  }, { timezone: 'Europe/Dublin' });
+
+  app.listen(PORT, () => {
+    console.log(`Backend API running on http://localhost:${PORT}`);
+    console.log(`Scraper scheduled to run daily at 03:00 Europe/Dublin`);
+  });
+}
+
+start().catch(err => {
+  console.error('Failed to start:', err);
+  process.exit(1);
 });
