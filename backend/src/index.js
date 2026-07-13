@@ -37,6 +37,10 @@ app.get('/api/health', (req, res) => {
 async function start() {
   await migrate();
 
+  // Clean up any log entries left as "running" from a previous crashed process
+  const { getDb } = require('./db');
+  getDb().prepare(`UPDATE scrape_log SET status='error', error='Process crashed', finished_at=? WHERE status='running'`).run(new Date().toISOString());
+
   cron.schedule('0 7 * * *', async () => {
     console.log('[CRON] Starting scheduled scrape at', new Date().toISOString());
     try {

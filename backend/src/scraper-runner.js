@@ -134,7 +134,7 @@ async function runAll() {
   let totalAdded = 0, totalSkipped = 0;
 
   // Split into batches of 4 — run each batch in parallel, batches sequentially
-  const BATCH_SIZE = 4;
+  const BATCH_SIZE = 2;
   for (let i = 0; i < scrapers.length; i += BATCH_SIZE) {
     const batch = scrapers.slice(i, i + BATCH_SIZE);
     console.log(`[Batch ${Math.floor(i / BATCH_SIZE) + 1}] Running: ${batch.map(s => s.name).join(', ')}`);
