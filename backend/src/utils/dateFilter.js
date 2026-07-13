@@ -1,10 +1,7 @@
-const VALID_YEARS = [2027, 2028];
+const VALID_YEARS = [2025, 2026, 2027, 2028];
 
 function parseStartYear(startDate) {
   if (!startDate) return null;
-  const match = startDate.match(/20(2[7-9]|3\d)/);
-  if (match) return parseInt(match[0]);
-  // look for month/year patterns like "September 2027", "Sept 27", "Q3 2027"
   const yearMatch = startDate.match(/\b(202[5-9]|203\d)\b/);
   if (yearMatch) return parseInt(yearMatch[0]);
   return null;
