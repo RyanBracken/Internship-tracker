@@ -17,6 +17,10 @@ const scrapers = [
   require('./scrapers/companies/banks'),
   require('./scrapers/companies/consulting'),
   require('./scrapers/companies/alternatives'),
+  require('./scrapers/companies/london'),
+  require('./scrapers/companies/paris'),
+  require('./scrapers/companies/frankfurt'),
+  require('./scrapers/companies/zurich'),
 ];
 
 function shortDescription(desc) {
@@ -59,7 +63,7 @@ async function runScraper(scraper) {
 
     for (const listing of listings) {
       const loc = (listing.location || '').toLowerCase();
-      if (loc && !loc.includes('dublin') && !loc.includes('ireland')) { skipped++; continue; }
+      if (loc && !loc.includes('dublin') && !loc.includes('ireland') && !loc.includes('london') && !loc.includes('united kingdom') && !loc.includes(' uk') && !loc.includes('paris') && !loc.includes('france') && !loc.includes('frankfurt') && !loc.includes('germany') && !loc.includes('zurich') && !loc.includes('switzerland')) { skipped++; continue; }
       if (!isRelevant(listing.title, listing.description)) { skipped++; continue; }
       if (!isValidStartYear(listing.start_date)) { skipped++; continue; }
       if (isExpired(listing.date_expires)) { skipped++; continue; }

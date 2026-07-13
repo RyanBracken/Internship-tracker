@@ -19,7 +19,7 @@ router.get('/stats', (req, res) => {
 router.get('/', (req, res) => {
   try {
     const db = getDb();
-    const { q, category, company, salary_type, source_type, source, page = 1, limit = 20, sort = 'date_scraped', order = 'desc' } = req.query;
+    const { q, category, company, salary_type, source_type, source, city, page = 1, limit = 20, sort = 'date_scraped', order = 'desc' } = req.query;
 
     const pageNum = Math.max(1, parseInt(page));
     const limitNum = Math.min(100, Math.max(1, parseInt(limit)));
@@ -37,6 +37,7 @@ router.get('/', (req, res) => {
     if (salary_type) { conditions.push('salary_type = ?'); params.push(salary_type); }
     if (source_type) { conditions.push('source_type = ?'); params.push(source_type); }
     if (source) { conditions.push('source = ?'); params.push(source); }
+    if (city) { conditions.push('location LIKE ?'); params.push(`%${city}%`); }
 
     const where = `WHERE ${conditions.join(' AND ')}`;
     const countRow = db.prepare(`SELECT COUNT(*) as total FROM internships ${where}`).get(...params);

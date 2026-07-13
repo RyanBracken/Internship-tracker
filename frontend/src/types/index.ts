@@ -79,4 +79,5 @@ export interface Filters {
   source: string
   sort: string
   order: string
+  city: string
 }

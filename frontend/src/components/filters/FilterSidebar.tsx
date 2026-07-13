@@ -9,6 +9,14 @@ interface FilterSidebarProps {
   onReset: () => void
 }
 
+const CITIES = [
+  { value: '', label: '🌍 All cities' },
+  { value: 'dublin', label: '🇮🇪 Dublin' },
+  { value: 'london', label: '🇬🇧 London' },
+  { value: 'paris', label: '🇫🇷 Paris' },
+  { value: 'frankfurt', label: '🇩🇪 Frankfurt' },
+  { value: 'zurich', label: '🇨🇭 Zurich' },
+]
 const CATEGORIES = ['Finance', 'Accounting', 'Tax', 'Audit', 'Banking & Investment', 'Economics', 'Business & Strategy', 'Consulting']
 const SALARY_TYPES = [
   { value: 'paid', label: 'Paid' },
@@ -40,6 +48,22 @@ export default function FilterSidebar({ filters, stats, onFilterChange, onReset 
 
   return (
     <aside className="w-full flex flex-col gap-5">
+      {/* City */}
+      <FilterSection title="City">
+        <div className="flex flex-col gap-1">
+          {CITIES.map(({ value, label }) => (
+            <button
+              key={value}
+              onClick={() => onFilterChange('city', filters.city === value ? '' : value)}
+              className={clsx('text-left text-sm px-3 py-1.5 rounded-lg transition-colors font-medium',
+                filters.city === value || (value === '' && !filters.city)
+                  ? 'bg-brand-100 text-brand-800 dark:bg-brand-900/40 dark:text-brand-300'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800')}
+            >{label}</button>
+          ))}
+        </div>
+      </FilterSection>
+
       {/* Search */}
       <FilterSection title="Search">
         <input
