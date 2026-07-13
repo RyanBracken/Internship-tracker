@@ -117,7 +117,7 @@ export default function ScraperStatus() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Scraper Status</h1>
         <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-          Scrapers run automatically every day at 03:00 Dublin time. You can also trigger a manual scrape.
+          Scrapers run automatically every 6 hours (00:00, 06:00, 12:00, 18:00 Dublin time) across 4 parallel workers. You can also trigger a manual scrape.
         </p>
       </div>
 
@@ -132,7 +132,7 @@ export default function ScraperStatus() {
               </span>
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Next automatic run: daily at 03:00 Europe/Dublin
+              Next automatic run: every 6 hours (00:00, 06:00, 12:00, 18:00)
             </p>
           </div>
           <button

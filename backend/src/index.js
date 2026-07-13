@@ -37,7 +37,7 @@ app.get('/api/health', (req, res) => {
 async function start() {
   await migrate();
 
-  cron.schedule('0 3 * * *', async () => {
+  cron.schedule('0 */6 * * *', async () => {
     console.log('[CRON] Starting scheduled scrape at', new Date().toISOString());
     try {
       const { runAll } = require('./scraper-runner');
@@ -49,7 +49,7 @@ async function start() {
 
   app.listen(PORT, () => {
     console.log(`Backend API running on http://localhost:${PORT}`);
-    console.log(`Scraper scheduled to run daily at 03:00 Europe/Dublin`);
+    console.log(`Scraper scheduled to run every 6 hours`);
   });
 }
 

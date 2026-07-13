@@ -120,12 +120,25 @@ async function runScraper(scraper) {
   return { added, skipped };
 }
 
+async function runBatch(batch) {
+  const results = await Promise.allSettled(batch.map(s => runScraper(s)));
+  let added = 0, skipped = 0;
+  for (const r of results) {
+    if (r.status === 'fulfilled') { added += r.value.added; skipped += r.value.skipped; }
+  }
+  return { added, skipped };
+}
+
 async function runAll() {
   console.log('Starting full scrape run at', new Date().toISOString());
   let totalAdded = 0, totalSkipped = 0;
 
-  for (const scraper of scrapers) {
-    const { added, skipped } = await runScraper(scraper);
+  // Split into batches of 4 — run each batch in parallel, batches sequentially
+  const BATCH_SIZE = 4;
+  for (let i = 0; i < scrapers.length; i += BATCH_SIZE) {
+    const batch = scrapers.slice(i, i + BATCH_SIZE);
+    console.log(`[Batch ${Math.floor(i / BATCH_SIZE) + 1}] Running: ${batch.map(s => s.name).join(', ')}`);
+    const { added, skipped } = await runBatch(batch);
     totalAdded += added;
     totalSkipped += skipped;
   }
