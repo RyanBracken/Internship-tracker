@@ -1,4 +1,4 @@
-const VALID_YEARS = [2027, 2028];
+const VALID_YEARS = [2026, 2027, 2028];
 
 function parseStartYear(startDate) {
   if (!startDate) return null;
