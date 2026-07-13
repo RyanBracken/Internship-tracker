@@ -17,6 +17,19 @@ function randomDelay(min = 2000, max = 6000) {
 
 async function fetchHtml(url, options = {}) {
   await randomDelay(1500, 4000);
+
+  // If Scrapfly API key is set, route through Scrapfly to bypass anti-bot
+  const scrapflyKey = process.env.SCRAPFLY_API_KEY;
+  if (scrapflyKey) {
+    const scrapflyUrl = `https://api.scrapfly.io/scrape?key=${scrapflyKey}&url=${encodeURIComponent(url)}&render_js=false&asp=true`;
+    try {
+      const response = await axios.get(scrapflyUrl, { timeout: 30000 });
+      return response.data?.result?.content || response.data;
+    } catch (err) {
+      console.warn(`[Scrapfly] Failed for ${url}, falling back to direct fetch: ${err.message}`);
+    }
+  }
+
   const response = await axios.get(url, {
     headers: {
       'User-Agent': randomUserAgent(),
