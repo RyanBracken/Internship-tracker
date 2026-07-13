@@ -16,6 +16,7 @@ const scrapers = [
   require('./scrapers/companies/bigfour'),
   require('./scrapers/companies/banks'),
   require('./scrapers/companies/consulting'),
+  require('./scrapers/companies/alternatives'),
 ];
 
 function shortDescription(desc) {
