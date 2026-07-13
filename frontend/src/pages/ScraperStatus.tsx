@@ -21,16 +21,45 @@ interface ScrapeStatus {
 }
 
 const SOURCES = [
-  { name: 'IrishJobs', type: 'Job board', icon: '🇮🇪' },
-  { name: 'GradIreland', type: 'Job board', icon: '🎓' },
-  { name: 'RecruitIreland', type: 'Job board', icon: '🔍' },
-  { name: 'ETRecruite', type: 'Job board', icon: '🔗' },
-  { name: 'Indeed', type: 'Job board', icon: '🔎' },
-  { name: 'LinkedIn', type: 'Job board', icon: '💼' },
-  { name: 'Glassdoor', type: 'Job board', icon: '🚪' },
-  { name: 'BigFour', type: 'Direct (Deloitte, PwC, KPMG, EY, GT, BDO)', icon: '🏢' },
-  { name: 'Banks', type: 'Direct (BOI, AIB, Davy, State Street, Citi...)', icon: '🏦' },
-  { name: 'Consulting', type: 'Direct (Accenture, Stripe, Mastercard...)', icon: '💡' },
+  // ── Dublin job boards ──────────────────────────────────────────
+  { name: 'IrishJobs', type: '🇮🇪 Job board', icon: '🇮🇪' },
+  { name: 'GradIreland', type: '🇮🇪 Job board', icon: '🎓' },
+  { name: 'RecruitIreland', type: '🇮🇪 Job board', icon: '🔍' },
+  { name: 'ETRecruite', type: '🇮🇪 Job board', icon: '🔗' },
+  { name: 'Indeed', type: '🌍 Job board (Dublin)', icon: '🔎' },
+  { name: 'LinkedIn', type: '🌍 Job board (Dublin)', icon: '💼' },
+  { name: 'Glassdoor', type: '🌍 Job board (Dublin)', icon: '🚪' },
+  // ── UK / London job boards ─────────────────────────────────────
+  { name: 'eFinancialCareers', type: '🇬🇧 Finance job board (all cities)', icon: '💹' },
+  { name: 'Reed', type: '🇬🇧 Job board (London)', icon: '📋' },
+  { name: 'Totaljobs', type: '🇬🇧 Job board (London)', icon: '🗂️' },
+  { name: 'CV-Library', type: '🇬🇧 Job board (London)', icon: '📄' },
+  { name: 'Targetjobs', type: '🇬🇧 Graduate job board (London)', icon: '🎯' },
+  { name: 'Milkround', type: '🇬🇧 Graduate job board (London)', icon: '🥛' },
+  { name: 'Prospects', type: '🇬🇧 Graduate job board (London)', icon: '🎓' },
+  { name: 'Bright Network', type: '🇬🇧 Graduate network (London)', icon: '✨' },
+  { name: 'Monster', type: '🌍 Job board (London, Dublin, Paris, Frankfurt)', icon: '👾' },
+  { name: 'Handshake', type: '🌍 Student platform (London, Dublin)', icon: '🤝' },
+  { name: 'Welcome to the Jungle', type: '🌍 Job board (all cities)', icon: '🌿' },
+  // ── Germany job boards ─────────────────────────────────────────
+  { name: 'StepStone', type: '🇩🇪 Job board (Frankfurt)', icon: '🪨' },
+  // ── France job boards ──────────────────────────────────────────
+  { name: 'French Job Boards', type: '🇫🇷 APEC, HelloWork, Cadremploi (Paris)', icon: '🗼' },
+  // ── Switzerland job boards ─────────────────────────────────────
+  { name: 'Swiss Job Boards', type: '🇨🇭 jobs.ch, jobup.ch, jobscout24 (Zurich)', icon: '🏔️' },
+  // ── Dublin direct scrapers ─────────────────────────────────────
+  { name: 'BigFour', type: '🇮🇪 Direct (Deloitte, PwC, KPMG, EY, GT, BDO)', icon: '🏢' },
+  { name: 'Banks', type: '🇮🇪 Direct (BOI, AIB, Goldman, JP Morgan, Citi...)', icon: '🏦' },
+  { name: 'Consulting', type: '🇮🇪 Direct (Accenture, Capgemini, Stripe...)', icon: '💡' },
+  { name: 'Alternatives & Boutiques', type: '🇮🇪 Direct (PE, Private Debt, Advisory — Dublin)', icon: '🏛️' },
+  // ── London direct scrapers ─────────────────────────────────────
+  { name: 'London', type: '🇬🇧 Direct (Goldman, KKR, Blackstone, McKinsey, 100+ firms)', icon: '🇬🇧' },
+  // ── Paris direct scrapers ──────────────────────────────────────
+  { name: 'Paris', type: '🇫🇷 Direct (BNP, Lazard, Ardian, McKinsey, 60+ firms)', icon: '🇫🇷' },
+  // ── Frankfurt direct scrapers ──────────────────────────────────
+  { name: 'Frankfurt', type: '🇩🇪 Direct (Deutsche Bank, KKR, DWS, Roland Berger, 60+ firms)', icon: '🇩🇪' },
+  // ── Zurich direct scrapers ─────────────────────────────────────
+  { name: 'Zurich', type: '🇨🇭 Direct (UBS, Julius Baer, Partners Group, McKinsey, 60+ firms)', icon: '🇨🇭' },
 ]
 
 export default function ScraperStatus() {
